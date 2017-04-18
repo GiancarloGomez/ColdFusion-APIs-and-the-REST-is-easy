@@ -1,0 +1,21 @@
+Header set Access-Control-Allow-Credentials "true"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, HEAD, OPTIONS, DELETE"
+Header set Access-Control-Max-Age "600"
+
+# Allow CORS if request is CORS
+SetEnvIf Origin ":" IS_CORS
+Header set Access-Control-Allow-Origin "*" env=IS_CORS
+Header set Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token" env=IS_CORS
+
+# API Version
+Header set Api-Version "2"
+
+# Options +FollowSymlinks
+# RewriteEngine On
+
+# Force use of /api instead of /rest
+# RewriteRule rest/(.*)$ /api/$1 [R=301,L]
+
+# I can not set as default but I do not want the rest mapping in my urls
+# RewriteCond %{REQUEST_URI} !^/api/rest_demo
+# RewriteRule api/(.*)$ api/rest_demo/$1 [QSA,L]

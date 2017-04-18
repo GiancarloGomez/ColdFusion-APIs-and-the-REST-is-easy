@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Artist Manager</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/2620c4ea58.css">
+	<style>
+		body {font:normal 14px/1.4 Lato;}
+		#artist-app {
+			opacity: 0;
+			transition: opacity .5s;
+		}
+		#artist-app.on { opacity: 1; }
+		table tr td:last-child {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+	<div class="container" id="artist-app">
+		<div class="page-header">
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" data-do="add"><i class="fa fa-plus"></i> Add Artists</button>
+				<button type="button" class="btn btn-info" data-do="add-dummy"><i class="fa fa-plus"></i> Add Artists w/ Data</button>
+			</div>
+			<h1>Artist Manager</h1>
+		</div>
+		<div class="well well-sm clearfix">
+			<span class="pull-left" id="api-details"></span>
+			<span class="pull-right">
+				<button type="button" class="btn btn-primary" data-do="api"><i class="fa fa-pencil"></i></button>
+				<button type="button" class="btn btn-info" data-do="refresh"><i class="fa fa-refresh"></i></button>
+			</span>
+		</div>
+		<div id="artist-count" class="well well-sm text-center"></div>
+		<table class="table" id="artist-table">
+			<thead>
+				<th>ID</th>
+				<th>Artist</th>
+				<th class="hidden-sm hidden-xs">Email</th>
+				<th class="hidden-sm hidden-xs">Phone</th>
+				<th class="hidden-xs">Address</th>
+				<th>&nbsp;</th>
+			</thead>
+			<tbody id="artist-list">
+			</tbody>
+		</table>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="artist-form">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form name="artistFrm" id="artistFrm" method="POST" action="./">
+					<div class="modal-header">
+						<h4 class="modal-title">Artist Form</h4>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="artistID" value="">
+						<div class="form-group">
+							<label for="_firstName">First Name</label>
+							<input type="text" id="_firstName" name="firstName" value="" class="required form-control" data-title="First Name Required" />
+						</div>
+						<div class="form-group">
+							<label for="_lastName">Last Name</label>
+							<input type="text" id="_lastName" name="lastName" value="" class="required form-control" data-title="Last Name Required" />
+						</div>
+						<div class="form-group">
+							<label for="_email">Email</label>
+							<input type="email" id="_email" name="email" value="" class="required form-control" data-title="Email Required" />
+						</div>
+						<div class="form-group">
+							<label for="_phone">Phone</label>
+							<input type="text" id="_phone" name="phone" value="" class="required form-control" data-title="Phone Required" />
+						</div>
+						<div class="form-group">
+							<label for="_address">Address</label>
+							<input type="text" id="_address" name="address" value="" class="required form-control" data-title="Address Required" />
+						</div>
+						<div class="form-group">
+							<label for="_city">City</label>
+							<input type="text" id="_city" name="city" value="" class="required form-control" data-title="City Required" />
+						</div>
+						<div class="form-group">
+							<label for="_state">State</label>
+							<input type="text" id="_state" name="state" value="" maxlength="2" class="required form-control" data-title="State Required" />
+						</div>
+						<div class="form-group">
+							<label for="_postalCode">Zip Code</label>
+							<input type="text" id="_postalCode" name="postalCode" value="" class="required form-control" data-title="Zip Code Required" />
+						</div>
+						<div class="form-group">
+							<label for="_thePassword">Password</label>
+							<input type="password" id="_thePassword" name="thePassword" value="" class="required form-control" data-title="Password Required" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="frmPrc hide">
+							<button type="button" class="btn btn-primary" disabled><i class="fa fa-spin fa-spinner"></i> Processing</button>
+						</div>
+						<div class="frmBtn">
+							<button type="submit" class="btn btn-primary">Save changes</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="api-form">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form name="apiFrm" id="apiFrm" method="POST" action="./">
+					<div class="modal-header">
+						<h4 class="modal-title">API Form</h4>
+					</div>
+					<div class="modal-body">
+						<div class="alert alert-danger hide">
+							Either the URL or Credentials are incorrect, could not connect.
+						</div>
+						<div class="form-group">
+							<label for="_apiUrl">API Url</label>
+							<input type="text" id="_apiUrl" name="apiUrl" value="" class="required form-control" data-title="API URL Required" />
+							<span class="help-block">https://rest.local.com/api/v1/artist</span>
+						</div>
+						<div class="form-group">
+							<label for="_apiKey">API Key</label>
+							<input type="text" id="_apiKey" name="apiKey" value="" class="required form-control" data-title="API URL Required" />
+							<span class="help-block">123456</span>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="frmPrc hide">
+							<button type="button" class="btn btn-primary" disabled><i class="fa fa-spin fa-spinner"></i> Processing</button>
+						</div>
+						<div class="frmBtn">
+							<button type="submit" class="btn btn-primary">Save</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/javascript.validation/latest/validation.min.js"></script>
+	<script src="./artists-app.js"></script>
+</body>
+</html>
