@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Relax ... REST is easy</title>
+	<title>THE API</title>
 	<style>
 		body {
 			font:normal 14px/1.4 'Operator Mono Ssm', Menlo, Consolas, monospace;
