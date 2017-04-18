@@ -16,6 +16,7 @@ Header set Api-Version "2"
 # Force use of /api instead of /rest
 # RewriteRule rest/(.*)$ /api/$1 [R=301,L]
 
+# PASS-TO-SERVICE-MAPPING
 # I can not set as default but I do not want the rest mapping in my urls
 # RewriteCond %{REQUEST_URI} !^/api/rest_demo
 # RewriteRule api/(.*)$ api/rest_demo/$1 [QSA,L]
