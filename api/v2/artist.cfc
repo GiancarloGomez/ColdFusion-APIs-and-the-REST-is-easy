@@ -4,7 +4,6 @@ component rest="true" restpath="v2/artist" extends="apiAuth" {
 
 	remote struct function getAll()
 		httpmethod 		= "GET"
-		returnformat 	= "json"
 	{
 		var response 	= prepareResponse(variables.version);
 		var results 	= [];
